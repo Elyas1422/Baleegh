@@ -2,7 +2,11 @@
   <div class="svg-background"></div>
   <div class="text-left gap-0 flex flex-col">
     <div class="text-right text-box h-16 lg:h-32">
+      @if(translatedText){
       <h1>{{ translatedText }}</h1>
+      } @else{
+      <h1 class="placeholder-text">{{ placeholderText }}</h1>
+      }
     </div>
     <div class="btns-bar mt-0 flex flex-row-reverse gap-4">
       <button class="btn-not-listening" (click)="copyText()">

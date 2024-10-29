@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
@@ -12,7 +12,8 @@ import { Clipboard } from '@angular/cdk/clipboard';
   ],
 })
 export class ArabicBoxComponent {
-  translatedText: string = 'النص المترجم';
+  @Input() translatedText: string = 'النص المترجم';
+  placeholderText: string = 'يرجى إدخال نص للترجمة';
 
   constructor(private clipboard: Clipboard) {}
 

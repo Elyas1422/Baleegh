@@ -1,8 +1,16 @@
 import { FormsModule } from '@angular/forms';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EnglishBoxComponent } from './english-box/english-box.component';
 import { ArabicBoxComponent } from './arabic-box/arabic-box.component';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  of,
+  Subject,
+  switchMap,
+} from 'rxjs';
+import { BaleeghTranslateService } from '../../services/baleegh-translate.service';
 
 @Component({
   selector: 'app-tanslation-section',
@@ -11,44 +19,35 @@ import { ArabicBoxComponent } from './arabic-box/arabic-box.component';
   templateUrl: './tanslation-section.component.html',
   styleUrl: './tanslation-section.component.scss',
 })
-export class TanslationSectionComponent {
-  recognizedText: string = '';
-  recognition: any;
-  isListening: boolean = false;
-  translatedText: string = '';
+export class TanslationSectionComponent implements OnInit {
+  private textSubject = new Subject<string>();
+  translatedText: { translation: string } = { translation: '' };
 
-  constructor(private cdr: ChangeDetectorRef) {
-    // Initialize the Web Speech API (SpeechRecognition)
-    const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
-    this.recognition = new SpeechRecognition();
-    this.recognition.lang = 'en-US';
-    this.recognition.interimResults = false;
-    this.recognition.maxAlternatives = 1;
-
-    // Listen for recognition results
-    this.recognition.onresult = (event: any) => {
-      const speechResult = event.results[0][0].transcript;
-      this.recognizedText += speechResult + ' ';
-      this.cdr.detectChanges();
-    };
-
-    // Handle errors
-    this.recognition.onerror = (event: any) => {
-      console.error('Speech recognition error:', event.error);
-    };
-
-    // Handle the end of recognition
-    this.recognition.onend = () => {
-      this.isListening = false;
-      this.cdr.detectChanges();
-    };
+  constructor(private baleeghTranslateService: BaleeghTranslateService) {
+    this.textSubject
+      .pipe(
+        debounceTime(800),
+        distinctUntilChanged(),
+        switchMap((value) =>
+          baleeghTranslateService.getBaleeghTranslatation(value)
+        )
+      )
+      .subscribe({
+        next: (response) => {
+          this.translatedText = response;
+        },
+        error: (error) => {
+          console.error('Translation error:', error); // Handle error response
+        },
+      });
   }
-
-  // Method to start the recognition process
-  startRecognition(): void {
-    this.isListening = true;
-    this.recognition.start();
+  onTextChange(value: string): void {
+    this.textSubject.next(value);
+  }
+  ngOnInit(): void {
+    console.log('TanslationSectionComponent initialized');
+  }
+  prints() {
+    console.log(this.translatedText);
   }
 }

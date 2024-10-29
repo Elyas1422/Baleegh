@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,6 +18,7 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class EnglishBoxComponent {
+  @Output() textChange = new EventEmitter<string>();
   recognizedText: string = '';
   recognition: any;
   isListening: boolean = false;
@@ -63,5 +69,6 @@ export class EnglishBoxComponent {
       );
       this.recognizedText = event.target.value;
     }
+    this.textChange.emit(this.recognizedText); // Emit the textarea value
   }
 }
