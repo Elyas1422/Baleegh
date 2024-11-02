@@ -8,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BaleeghTranslateService {
   constructor(private http: HttpClient) {}
-  //TODO: Implement better approch.
   getBaleeghTranslatation(text: string): Observable<{ translation: string }> {
     if (text) {
       return this.http.get<any>(environment.apiUrl + `?text=${text}`).pipe(

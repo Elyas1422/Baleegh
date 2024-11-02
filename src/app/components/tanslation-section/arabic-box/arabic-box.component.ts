@@ -1,24 +1,36 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, input, OnChanges } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-arabic-box',
   standalone: true,
-  imports: [],
+  imports: [NgxSpinnerModule],
   templateUrl: './arabic-box.component.html',
   styleUrls: [
     './arabic-box.component.scss',
     '../tanslation-section.component.scss',
   ],
 })
-export class ArabicBoxComponent {
+export class ArabicBoxComponent implements OnChanges {
   @Input() translatedText: string = 'النص المترجم';
+  @Input() isLoading: boolean = false;
+
   placeholderText: string = 'يرجى إدخال نص للترجمة';
 
-  constructor(private clipboard: Clipboard) {}
+  constructor(
+    private clipboard: Clipboard,
+    private spinner: NgxSpinnerService
+  ) {}
 
   copyText() {
     this.clipboard.copy(this.translatedText);
-    alert('تم النسخ');
+  }
+  ngOnChanges() {
+    if (this.isLoading) {
+      this.spinner.show();
+    } else {
+      this.spinner.hide();
+    }
   }
 }

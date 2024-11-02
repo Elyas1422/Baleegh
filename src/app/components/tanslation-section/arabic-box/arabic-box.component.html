@@ -2,6 +2,13 @@
   <div class="svg-background"></div>
   <div class="text-left gap-0 flex flex-col">
     <div class="text-right text-box h-16 lg:h-32">
+      <ngx-spinner
+        bdColor="rgb(13, 20, 30,0.5)"
+        size="medium"
+        color="#ffc882"
+        type="fire"
+        [fullScreen]="false"
+      ></ngx-spinner>
       @if(translatedText){
       <h1>{{ translatedText }}</h1>
       } @else{
@@ -12,9 +19,10 @@
       <button class="btn-not-listening" (click)="copyText()">
         <i class="fi fi-br-clipboard"></i>
       </button>
-      <button class="btn-not-listening">
+      <!-- TODO:Add text to voice(Arabic). -->
+      <!-- <button class="btn-not-listening" (click)="showSpinner()">
         <i class="fi fi-sc-volume"></i>
-      </button>
+      </button> -->
     </div>
   </div>
 </div>

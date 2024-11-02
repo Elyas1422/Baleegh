@@ -21,6 +21,7 @@ import { BaleeghTranslateService } from '../../services/baleegh-translate.servic
 })
 export class TanslationSectionComponent implements OnInit {
   private textSubject = new Subject<string>();
+  isLoading = false;
   translatedText: { translation: string } = { translation: '' };
 
   constructor(private baleeghTranslateService: BaleeghTranslateService) {
@@ -28,13 +29,15 @@ export class TanslationSectionComponent implements OnInit {
       .pipe(
         debounceTime(800),
         distinctUntilChanged(),
-        switchMap((value) =>
-          baleeghTranslateService.getBaleeghTranslatation(value)
-        )
+        switchMap((value) => {
+          this.isLoading = true;
+          return baleeghTranslateService.getBaleeghTranslatation(value);
+        })
       )
       .subscribe({
         next: (response) => {
           this.translatedText = response;
+          this.isLoading = false;
         },
         error: (error) => {
           console.error('Translation error:', error); // Handle error response
