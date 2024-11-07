@@ -9,13 +9,18 @@
       id=""
       placeholder="Write your text here"
     ></textarea>
-    <div class="btns-bar mt-0 flex flex-row gap-4">
-      <button
-        (click)="startRecognition()"
-        [ngClass]="isListening ? 'btn-listening' : 'btn-not-listening'"
-      >
-        <i class="fi fi-sc-microphone-alt"></i>
-      </button>
+    <div class="btns-bar mt-0 flex flex-row justify-between">
+      <div>
+        <button
+          (click)="startRecognition()"
+          [ngClass]="isListening ? 'btn-listening' : 'btn-not-listening'"
+        >
+          <i class="fi fi-sc-microphone-alt"></i>
+        </button>
+      </div>
+      <p [ngClass]="{ 'max-char-text': recognizedText.length === 100 }">
+        {{ recognizedText.length }}/100
+      </p>
       <!-- TODO:Add text to voice(English). -->
       <!-- <button class="btn-not-listening">
         <i class="fi fi-sc-volume"></i>

@@ -61,14 +61,18 @@ export class EnglishBoxComponent {
   // Remove characters that are not in English text
   validateEnglish(event: any) {
     const allowedCharacters = /^[a-zA-Z0-9 .,!?'"()\-]*$/;
+    const maxLength = 100;
 
     if (!allowedCharacters.test(event.target.value)) {
       event.target.value = event.target.value.replace(
         /[^a-zA-Z0-9 .,!?'"()\-]/g,
         ''
       );
-      this.recognizedText = event.target.value;
     }
+    if (event.target.value.length > maxLength) {
+      event.target.value = event.target.value.substring(0, maxLength);
+    }
+    this.recognizedText = event.target.value;
     this.textChange.emit(this.recognizedText); // Emit the textarea value
   }
 }

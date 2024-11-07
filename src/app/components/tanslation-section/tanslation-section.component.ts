@@ -19,10 +19,10 @@ import { BaleeghTranslateService } from '../../services/baleegh-translate.servic
   templateUrl: './tanslation-section.component.html',
   styleUrl: './tanslation-section.component.scss',
 })
-export class TanslationSectionComponent implements OnInit {
+export class TanslationSectionComponent {
   private textSubject = new Subject<string>();
   isLoading = false;
-  translatedText: { translation: string } = { translation: '' };
+  translatedText: string = '';
 
   constructor(private baleeghTranslateService: BaleeghTranslateService) {
     this.textSubject
@@ -40,17 +40,11 @@ export class TanslationSectionComponent implements OnInit {
           this.isLoading = false;
         },
         error: (error) => {
-          console.error('Translation error:', error); // Handle error response
+          console.error('Translation error:', error);
         },
       });
   }
   onTextChange(value: string): void {
     this.textSubject.next(value);
-  }
-  ngOnInit(): void {
-    console.log('TanslationSectionComponent initialized');
-  }
-  prints() {
-    console.log(this.translatedText);
   }
 }
