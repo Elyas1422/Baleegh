@@ -18,13 +18,22 @@
           <i class="fi fi-sc-microphone-alt"></i>
         </button>
       </div>
-      <p
+      <div
         [ngClass]="
           recognizedText.length === maxLength ? 'max-char-text' : 'counter-text'
         "
+        class="flex flex-row gap-1"
       >
-        {{ recognizedText.length }}/{{ maxLength }}
-      </p>
+        <p>{{ recognizedText.length }}/{{ maxLength }}</p>
+        @if (recognizedText.length===maxLength){
+        <i
+          class="fi fi-rr-diamond-exclamation mt-1"
+          ngxTooltip="الكتابة محدودة بـ 60 حرفًا لأغراض التجربة."
+          placement="top-end"
+          arrow
+        ></i>
+        }
+      </div>
       <!-- TODO:Add text to voice(English). -->
       <!-- <button class="btn-not-listening">
         <i class="fi fi-sc-volume"></i>

@@ -6,11 +6,12 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgxTooltip } from '@ngx-popovers/tooltip';
 
 @Component({
   selector: 'app-english-box',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgxTooltip],
   templateUrl: './english-box.component.html',
   styleUrls: [
     './english-box.component.scss',
