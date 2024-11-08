@@ -23,7 +23,7 @@ export class EnglishBoxComponent {
   recognizedText: string = '';
   recognition: any;
   isListening: boolean = false;
-  maxLength = 60;
+  maxLength = 100;
 
   constructor(private cdr: ChangeDetectorRef) {
     // Initialize the Web Speech API (SpeechRecognition)

@@ -28,7 +28,7 @@
         @if (recognizedText.length===maxLength){
         <i
           class="fi fi-rr-diamond-exclamation mt-1"
-          ngxTooltip="الكتابة محدودة بـ 60 حرفًا لأغراض التجربة."
+          ngxTooltip="الكتابة محدودة بـ {{ maxLength }} حرفًا لأغراض التجربة."
           placement="top-end"
           arrow
         ></i>
