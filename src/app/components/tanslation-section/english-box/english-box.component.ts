@@ -22,6 +22,7 @@ export class EnglishBoxComponent {
   recognizedText: string = '';
   recognition: any;
   isListening: boolean = false;
+  maxLength = 60;
 
   constructor(private cdr: ChangeDetectorRef) {
     // Initialize the Web Speech API (SpeechRecognition)
@@ -61,7 +62,6 @@ export class EnglishBoxComponent {
   // Remove characters that are not in English text
   validateEnglish(event: any) {
     const allowedCharacters = /^[a-zA-Z0-9 .,!?'"()\-]*$/;
-    const maxLength = 100;
 
     if (!allowedCharacters.test(event.target.value)) {
       event.target.value = event.target.value.replace(
@@ -69,8 +69,8 @@ export class EnglishBoxComponent {
         ''
       );
     }
-    if (event.target.value.length > maxLength) {
-      event.target.value = event.target.value.substring(0, maxLength);
+    if (event.target.value.length > this.maxLength) {
+      event.target.value = event.target.value.substring(0, this.maxLength);
     }
     this.recognizedText = event.target.value;
     this.textChange.emit(this.recognizedText); // Emit the textarea value

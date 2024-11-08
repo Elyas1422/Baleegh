@@ -11,6 +11,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { BaleeghTranslateService } from '../../services/baleegh-translate.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-tanslation-section',
@@ -24,7 +25,10 @@ export class TanslationSectionComponent {
   isLoading = false;
   translatedText: string = '';
 
-  constructor(private baleeghTranslateService: BaleeghTranslateService) {
+  constructor(
+    private baleeghTranslateService: BaleeghTranslateService,
+    private toastr: ToastrService
+  ) {
     this.textSubject
       .pipe(
         debounceTime(800),
@@ -36,11 +40,13 @@ export class TanslationSectionComponent {
       )
       .subscribe({
         next: (response) => {
-          this.translatedText = response;
+          this.translatedText = response.translation;
           this.isLoading = false;
         },
         error: (error) => {
+          this.toastr.error('!Something went wrong', 'عذرًا، هناك مشكلة!');
           console.error('Translation error:', error);
+          this.isLoading = false;
         },
       });
   }

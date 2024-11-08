@@ -1,6 +1,7 @@
 import { Component, Input, input, OnChanges } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-arabic-box',
@@ -20,10 +21,12 @@ export class ArabicBoxComponent implements OnChanges {
 
   constructor(
     private clipboard: Clipboard,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService
   ) {}
 
   copyText() {
+    this.toastr.success('!Copied', 'تم النسخ!');
     this.clipboard.copy(this.translatedText);
   }
   ngOnChanges() {

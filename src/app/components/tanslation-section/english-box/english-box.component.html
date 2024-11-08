@@ -18,8 +18,12 @@
           <i class="fi fi-sc-microphone-alt"></i>
         </button>
       </div>
-      <p [ngClass]="{ 'max-char-text': recognizedText.length === 100 }">
-        {{ recognizedText.length }}/100
+      <p
+        [ngClass]="
+          recognizedText.length === maxLength ? 'max-char-text' : 'counter-text'
+        "
+      >
+        {{ recognizedText.length }}/{{ maxLength }}
       </p>
       <!-- TODO:Add text to voice(English). -->
       <!-- <button class="btn-not-listening">
