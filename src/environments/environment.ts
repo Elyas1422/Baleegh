@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://ammarservers--baleegh-webapp-fastapi-app.modal.run/',
+  apiUrl: 'https://almajeda--baleegh-webapp-fastapi-app.modal.run/',
 };
